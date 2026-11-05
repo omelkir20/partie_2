@@ -1,0 +1,47 @@
+---
+# ---------- Docker ----------
+
+- name: Supprimer les paquets Docker Ubuntu en conflit
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - docker-compose-v2
+    state: absent
+
+- name: Installer Docker CE, Compose et le SDK Python
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+      - python3-docker
+    state: present
+    update_cache: true
+
+- name: Docker démarré et activé
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Ajouter l'utilisateur au groupe docker
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+# ---------- Portainer ----------
+
+- name: Lancer Portainer
+  community.docker.docker_container:
+    name: portainer
+    image: portainer/portainer-ce:lts
+    restart_policy: always
+    ports:
+      - "9443:9443"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    state: started

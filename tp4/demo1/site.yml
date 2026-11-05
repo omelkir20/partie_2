@@ -1,0 +1,8 @@
+---
+- name: Déploiement complet par rôles
+  hosts: webserver
+  become: true
+  roles:
+    - jenkins_install
+    - docker_portainer_install
+    - container_deployment

@@ -1,0 +1,85 @@
+---
+- name: Installer Jenkins, Docker, Portainer et le conteneur web
+  hosts: webserver
+  become: true
+
+  tasks:
+    # ---------- Jenkins ----------
+    - name: Installer Java et dépendances
+      ansible.builtin.apt:
+        name: [fontconfig, openjdk-21-jre-headless, ca-certificates, curl]
+        state: present
+        update_cache: true
+
+    - name: Ajouter la clé du dépôt Jenkins
+      ansible.builtin.get_url:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+        dest: /etc/apt/keyrings/jenkins-keyring.asc
+        mode: '0644'
+
+    - name: Ajouter le dépôt Jenkins
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+        filename: jenkins
+        state: present
+
+    - name: Installer Jenkins
+      ansible.builtin.apt:
+        name: jenkins
+        state: present
+        update_cache: true
+
+    - name: Jenkins démarré et activé
+      ansible.builtin.service:
+        name: jenkins
+        state: started
+        enabled: true
+
+    # ---------- Docker ----------
+    - name: Installer Docker, Compose et le SDK Python
+      ansible.builtin.apt:
+        name: [python3-docker]
+        state: present
+
+    - name: Docker démarré et activé
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Ajouter l'utilisateur au groupe docker
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: true
+
+    # ---------- Portainer ----------
+    - name: Lancer Portainer
+      community.docker.docker_container:
+        name: portainer
+        image: portainer/portainer-ce:lts
+        restart_policy: always
+        ports:
+          - "9443:9443"
+          - "8000:8000"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - portainer_data:/data
+
+    # ---------- Conteneur web via compose ----------
+    - name: Créer le dossier du projet compose
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user }}/monsite"
+        state: directory
+        owner: "{{ ansible_user }}"
+
+    - name: Copier docker-compose.yml
+      ansible.builtin.copy:
+        src: docker-compose.yml
+        dest: "/home/{{ ansible_user }}/monsite/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+
+    - name: Démarrer le conteneur web
+      community.docker.docker_compose_v2:
+        project_src: "/home/{{ ansible_user }}/monsite"
+        state: present
