@@ -1,6 +1,6 @@
 # Partie 2
 ## I. TP4
-## Partie 0 : Préparation :
+## Partie 0 : Préparation 
 ![](cap-partie/tp4-cap1.PNG)
 ![](cap-partie/tp4-cap2.PNG)
 ![](cap-partie/tp4-cap3.PNG)
