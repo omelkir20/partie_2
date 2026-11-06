@@ -1,4 +1,4 @@
-# Partie 2
+# Partie 2 (TP4+TP5+TP6)
 ## I. TP4
 ## Partie 0 : Préparation 
 ![](cap-partie/tp4-cap1.PNG)
@@ -51,3 +51,33 @@
 ### roles-run
 ![](cap-partie/tp4-cap31.PNG)
 ![](cap-partie/tp4-cap32.PNG)
+## I. TP5
+## Étape 1 : activer la virtualisation imbriquée dans VMware + Étape 2 : installer VirtualBox, Ansible et Vagrant
+![](cap-partie/tp5-cap1.PNG)
+![](cap-partie/tp5-cap2.PNG)
+![](cap-partie/tp5-cap3.PNG)
+## Étape 3 : découvrir les commandes (rapide)
+![](cap-partie/tp5-cap4.PNG)
+![](cap-partie/tp5-cap5.PNG)
+## Étape 4 : démo vagrant_demo
+![](cap-partie/tp5-cap6.PNG)
+![](cap-partie/tp5-cap7.PNG)
+![](cap-partie/tp5-cap8.PNG)
+![](cap-partie/tp5-cap9.PNG)
+![](cap-partie/tp5-cap10.PNG)
+![](cap-partie/tp5-cap11.PNG)
+![](cap-partie/tp5-cap12.PNG)
+## Étape 5 : le lab (2 VM + Ansible)
+### 5.1 Structure du dossier
+![](cap-partie/tp5-cap13.PNG)
+### 5.2 Vagrantfile
+![](cap-partie/tp5-cap14.PNG)
+### 5.3 playbook.yml
+![](cap-partie/tp5-cap15.PNG)
+### 5.4 Rôles 
+![](cap-partie/tp5-cap17.PNG)
+![](cap-partie/tp5-cap18.PNG)
+![](cap-partie/tp5-cap16.PNG)
+### 5.5 Lancer le lab
+![](cap-partie/tp5-cap19.PNG)
+![](cap-partie/tp5-cap20.PNG)
