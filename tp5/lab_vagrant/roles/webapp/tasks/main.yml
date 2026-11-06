@@ -1,0 +1,16 @@
+---
+- name: Dossier de l'application
+  ansible.builtin.file:
+    path: /opt/webapp
+    state: directory
+
+- name: Déployer docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/webapp/docker-compose.yml
+
+- name: Lancer le conteneur web
+  ansible.builtin.command: docker compose up -d
+  args:
+    chdir: /opt/webapp
+  changed_when: false

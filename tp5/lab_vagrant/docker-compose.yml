@@ -1,0 +1,7 @@
+services:
+  web:
+    image: omelkir/monsite:1.0 
+    container_name: webapp
+    restart: always
+    ports:
+      - "80:80"               

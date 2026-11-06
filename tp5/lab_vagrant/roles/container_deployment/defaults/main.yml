@@ -1,0 +1,2 @@
+---
+compose_dir: "//home/omelkhir/partie2/{{ ansible_user }}/monsite"
